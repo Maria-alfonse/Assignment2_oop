@@ -9,18 +9,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// This function returns a vector of strings
 vector<string>split(string target, string delimiter){
+    // A string variable in which we add to it every character before the delimiter
     string word ="";
+
+    //the vector we will return
     vector<string>s;
+
+    //this loops over every character in the target string
     for(int i=0 ; i<target.size(); i++){
+        //if the character is the first character in the delimiter string it skips it by adding 
+        // the size of the delimiter string and subtracting 1 because the for loop adds 1, 
+        // then it adds the formed word to the vector and clears the word string to then add to it the next word
         if(target[i]==delimiter[0]){
+            i += delimiter.size()-1 ;
             s.push_back(word);
             word = "";
         }else{
+            //adds character by character in each word
             word += target[i];
         }
     }
-    s.push_back(word);
+    // if the word string not empty it adds it to the vector
+    if(word.size()) {
+        s.push_back(word);
+    }
+    
+    //returns vector
     return s;
 }
 
