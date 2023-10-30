@@ -19,23 +19,32 @@ vector<string>split(string target, string delimiter){
 
     //this loops over every character in the target string
     for(int i=0 ; i<target.size(); i++){
-        //if the character is the first character in the delimiter string it skips it by adding 
-        // the size of the delimiter string and subtracting 1 because the for loop adds 1, 
-        // then it adds the formed word to the vector and clears the word string to then add to it the next word
-        if(target[i]==delimiter[0]){
-            i += delimiter.size()-1 ;
-            s.push_back(word);
-            word = "";
-        }else{
-            //adds character by character in each word
-            word += target[i];
+        //if the character is the first character in the delimiter string
+        if(target[i]==delimiter[0]) {
+            // a variable to check the existence of the whole delimiter
+            string test = "";
+            
+            //a loop that will save the possible existence of the delimiter in the string 
+            for (int j = 0; j < delimiter.size() ; j++) {
+                test += target[i + j];
+            }
+            if (delimiter == test) {
+                // we add to i the size of the delimiter string and subtract 1 because the for loop adds 1,
+                // then add the formed word to the vector and clears the word string to then add to it the next word
+                i += delimiter.size() - 1;
+                s.push_back(word);
+                word = "";
+                continue;
+            }
         }
+        //adds character by character in each word
+        word += target[i];
     }
-    // if the word string not empty it adds it to the vector
+    // if the word string is not empty it adds it to the vector
     if(word.size()) {
         s.push_back(word);
     }
-    
+
     //returns vector
     return s;
 }
