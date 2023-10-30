@@ -35,6 +35,6 @@ int main() {
     vector<string>s1 = split("do re mi fa so la ti do", " ");
     for(int i=0 ; i<s1.size() ;i++){
         cout<<s1[i]<<'\n';
-    }cout<<'\n';
+    }
     return 0;
 }
