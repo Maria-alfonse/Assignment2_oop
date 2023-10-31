@@ -10,11 +10,14 @@
 using namespace std;
 
 bool solve(int n){
-    // the base case
+    // the base cases
     if(n==42){
         return true;
     }
-
+    if(n<42){
+        return false;
+    }
+    
     //if n is dividable by 5 we divide it by 5 then the new number will try to satisfy the other conditions
     if(n%5==0 && solve(n-42)){
         return true;
