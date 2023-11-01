@@ -1,3 +1,11 @@
+// File:A2_S5_20220131_8.cpp
+// Purpose: generate patterns
+// Author: Rana Esmail Zekery
+// Section: S5
+// ID: 20220131
+// TA: eng/Nardeen Mokhless Khela and eng/Maya Ahmed Kamal
+// Date: 1 novmber 2023
+
 #include <iostream>
 
 using namespace std;
