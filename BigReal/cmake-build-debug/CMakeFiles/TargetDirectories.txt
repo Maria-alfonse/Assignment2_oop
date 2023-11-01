@@ -1,0 +1,3 @@
+C:/Users/Ahmed/CLionProjects/BigReal/cmake-build-debug/CMakeFiles/BigReal.dir
+C:/Users/Ahmed/CLionProjects/BigReal/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Ahmed/CLionProjects/BigReal/cmake-build-debug/CMakeFiles/rebuild_cache.dir
