@@ -1,3 +1,10 @@
+// File:A2_S5_20220131_11.cpp
+// Purpose: Compare files
+// Author: Rana Esmail Zekery
+// Section: S5
+// ID: 20220131
+// TA: eng/Nardeen Mokhless Khela and eng/Maya Ahmed Kamal
+// Date: October 29, 2023
 #include <iostream>
 #include <fstream>
 #include <vector>
