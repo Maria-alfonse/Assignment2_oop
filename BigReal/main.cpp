@@ -8,6 +8,7 @@ private:
     string _Real;
     int _Size;
     bool _Sign; //0 +ve && 1 -ve
+
     bool isValid() {
         int count = 0;
         for (int i = 0; i < _Size; ++i) {
@@ -19,53 +20,6 @@ private:
             }
         }
         return true;
-    }
-
-    bool less_than(BigReal& n, BigReal& m){
-        if(n.isValid() && m.isValid()){
-            vector<string>n1 = n.Split_String(n._Real);
-            vector<string>m1 = m.Split_String(m._Real);
-            if(n1==m1 && n._Sign == m._Sign){
-                return false;
-            }else if(n1==m1 && n._Sign != m._Sign ){
-                return n._Sign;
-            }
-            if(n._Sign != m._Sign){
-                //if n 0 and m 1 then false
-                return n._Sign;
-            }else{
-                if(n1[0].size() == m1[0].size()){
-                    for(int i=0 ; i < n1[0].size() ; i++){
-                        if(n1[0][i] < m1[0][i]){
-                            return !n._Sign;
-                        }else if(n1[0][i] > m1[0][i]){
-                            return n._Sign;
-                        }
-                    }
-                    // 2ecound stage
-                    if(n1[1].size() == m1[1].size()){
-                        for(int i=0 ; i < n1[1].size() ; i++){
-                            if(n1[1][i] < m1[1][i]){
-                                return !n._Sign;
-                            }else if(n1[1][i] > m1[1][i]) {
-                                return n._Sign;
-                            }
-                        }
-                    }else if(n1[1].size() < m1[1].size()) {
-                        return !n._Sign;
-                    }else{
-                        return n._Sign;
-                    }
-                }else if(n1[0].size() < m1[0].size()) {
-                    return !n._Sign;
-                }else{
-                    return n._Sign;
-                }
-            }
-        }else {
-            cout<<"Numbers not valid!\n";
-            return false;
-        }
     }
 
     vector<string>Split_String(string s , string Delim=".") {
@@ -149,6 +103,61 @@ private:
         }
     }
 
+    bool less_than(BigReal& n, BigReal& m){
+        if(n.isValid() && m.isValid()){
+            vector<string>n1 = n.Split_String(n._Real);
+            vector<string>m1 = m.Split_String(m._Real);
+            if(n1==m1 && n._Sign == m._Sign){
+                return false;
+            }else if(n1==m1 && n._Sign != m._Sign ){
+                return n._Sign;
+            }
+            if(n._Sign != m._Sign){
+                //if n 0 and m 1 then false
+                return n._Sign;
+            }else{
+                if(n1[0].size() == m1[0].size()){
+                    for(int i=0 ; i < n1[0].size() ; i++){
+                        if(n1[0][i] < m1[0][i]){
+                            return !n._Sign;
+                        }else if(n1[0][i] > m1[0][i]){
+                            return n._Sign;
+                        }
+                    }
+                    // 2ecound stage
+                    if(n1[1].size() == m1[1].size()){
+                        for(int i=0 ; i < n1[1].size() ; i++){
+                            if(n1[1][i] < m1[1][i]){
+                                return !n._Sign;
+                            }else if(n1[1][i] > m1[1][i]) {
+                                return n._Sign;
+                            }
+                        }
+                    }else if(n1[1].size() < m1[1].size()) {
+                        return !n._Sign;
+                    }else{
+                        return n._Sign;
+                    }
+                }else if(n1[0].size() < m1[0].size()) {
+                    return !n._Sign;
+                }else{
+                    return n._Sign;
+                }
+            }
+        }else {
+            cout<<"Numbers not valid!\n";
+            return false;
+        }
+    }
+
+    bool greater_than(BigReal&n, BigReal&m){
+        if(n._Real == m._Real){
+            return false;
+        }else{
+            return !less_than(n, m);
+        }
+    }
+
 public:
     BigReal(string Real) {
         _Real = Real;
@@ -172,6 +181,7 @@ public:
             _Real = '0' + _Real;
         }
     }
+
     BigReal operator+(BigReal& other) {
         BigReal Answer(Sum(*this, other));
         return Answer;
@@ -188,8 +198,8 @@ public:
     }
 
     bool operator>(BigReal& other){
-        bool Answer(less_than(*this, other));
-        return !Answer;
+        bool Answer(greater_than(*this, other));
+        return Answer;
     }
 };
 
@@ -198,13 +208,11 @@ int main() {
     BigReal n2 ("2333333333339.1134322222222292");
     BigReal n3 = n1 + n2;
     cout << n3<<'\n';
-    int t= 64;
-    while(t--){
-        string n,m;
-        cin>>n>>m;
-        BigReal n2 (n), n3 (m);
-        cout<<(n2<n3)<<'\n'<<(n2>n3)<<'\n';
+    
+    string n,m;
+    cin>>n>>m;
+    BigReal n4 (n), n5 (m);
+    cout<<(n2<n3)<<'\n'<<(n2>n3)<<'\n';
 
-    }
     return 0;
 }
