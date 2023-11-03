@@ -46,33 +46,33 @@ private:
         return vString;
     }
 
-    string Sum(BigReal& stNum, BigReal& SecNum) {
+        string Sum(BigReal& stNum, BigReal& SecNum) {
         string Ans = "";
         int carry = 0;
         if (stNum.isValid() && SecNum.isValid()) {
             vector<string> Num1 = Split_String(stNum._Real);
-            string Deci1 = Num1[0];
-            string frac1 = Num1[1];
+            string Int1 = Num1[0];
+            string Dec1 = Num1[1];
             vector<string> Num2 = Split_String(SecNum._Real);
-            string Deci2 = Num2[0];
-            string frac2 = Num2[1];
+            string Int2 = Num2[0];
+            string Dec2 = Num2[1];
             if (!stNum._Sign && !SecNum._Sign) {
-                int digit_Idx1 = frac1.size() - 1;
-                int digit_Idx2 = frac2.size() - 1;
+                int digit_Idx1 = Dec1.size() - 1;
+                int digit_Idx2 = Dec2.size() - 1;
                 while(digit_Idx1 != digit_Idx2){
                     if(digit_Idx1 < digit_Idx2){
-                        frac1 = frac1 + '0';
+                        Dec1 = Dec1 + '0';
                         digit_Idx1++;
                     }else{
-                        frac2 = frac2 + '0';
+                        Dec2 = Dec2 + '0';
                         digit_Idx2++;
                     }
                 }
 
                 while (digit_Idx1 > -1 || digit_Idx2 > -1) {
 
-                    int Digit1 = (digit_Idx1 >= 0) ? frac1[digit_Idx1] - '0' : 0;
-                    int Digit2 = (digit_Idx2 >= 0) ? frac2[digit_Idx2] - '0' : 0;
+                    int Digit1 = (digit_Idx1 >= 0) ? Dec1[digit_Idx1] - '0' : 0;
+                    int Digit2 = (digit_Idx2 >= 0) ? Dec2[digit_Idx2] - '0' : 0;
                     int sum = Digit1 + Digit2 + carry;
                     carry = sum / 10;
                     sum = sum % 10;
@@ -83,11 +83,11 @@ private:
                 }
                 //std::reverse(Ans.begin(), Ans.end());
                 Ans = '.' + Ans;
-                digit_Idx1 = Deci1.size() - 1;
-                digit_Idx2 = Deci2.size() - 1;
+                digit_Idx1 = Int1.size() - 1;
+                digit_Idx2 = Int2.size() - 1;
                 while (digit_Idx1 > -1 || digit_Idx2 > -1) {
-                    int Digit1 = (digit_Idx1 >= 0) ? Deci1[digit_Idx1] - '0' : 0;
-                    int Digit2 = (digit_Idx2 >= 0) ? Deci2[digit_Idx2] - '0' : 0;
+                    int Digit1 = (digit_Idx1 >= 0) ? Int1[digit_Idx1] - '0' : 0;
+                    int Digit2 = (digit_Idx2 >= 0) ? Int2[digit_Idx2] - '0' : 0;
                     int sum = Digit1 + Digit2 + carry;
                     carry = sum / 10;
                     sum = sum % 10;
@@ -95,74 +95,22 @@ private:
                     digit_Idx1--;
                     digit_Idx2--;
                 }
-                if (carry > 0) {
-                    Ans = to_string(carry) + Ans;
-                }
-
-
-                return Ans;
-            }
-
-            else if(stNum._Sign && SecNum._Sign){
-
-                int digit_Idx1 = frac1.size() - 1;
-                int digit_Idx2 = frac2.size() - 1;
-                while(digit_Idx1 != digit_Idx2){
-                    if(digit_Idx1 < digit_Idx2){
-                        frac1 = frac1 + '0';
-                        digit_Idx1++;
-                    }else{
-                        frac2 = frac2 + '0';
-                        digit_Idx2++;
+                if (!Dec1.empty() || !Dec2.empty()) {
+                    Ans = Ans.substr(0, Ans.find_last_not_of('0') + 1);  // Remove trailing zeros 52.15000000
+                    if (Ans[Ans.size() - 1] == '.') {  // Remove decimal point if no decimal places 43.0000
+                        Ans.pop_back();//43
                     }
                 }
-
-                while (digit_Idx1 > -1 || digit_Idx2 > -1) {
-
-                    int Digit1 = (digit_Idx1 >= 0) ? frac1[digit_Idx1] - '0' : 0;
-                    int Digit2 = (digit_Idx2 >= 0) ? frac2[digit_Idx2] - '0' : 0;
-                    int sum = Digit1 + Digit2 + carry;
-                    carry = sum / 10;
-                    sum = sum % 10;
-                    Ans = to_string(sum) + Ans;
-                    digit_Idx1--;
-                    digit_Idx2--;
-
+                if (!Int1.empty() || !Int2.empty()) {
+                    Ans = Ans.substr(Ans.find_first_not_of('0') , Ans.size());  // Remove trailing zeros 00052.15
                 }
-                //std::reverse(Ans.begin(), Ans.end());
-                Ans = '.' + Ans;
-                digit_Idx1 = Deci1.size() - 1;
-                digit_Idx2 = Deci2.size() - 1;
-                while (digit_Idx1 > -1 || digit_Idx2 > -1) {
-                    int Digit1 = (digit_Idx1 >= 0) ? Deci1[digit_Idx1] - '0' : 0;
-                    int Digit2 = (digit_Idx2 >= 0) ? Deci2[digit_Idx2] - '0' : 0;
-                    int sum = Digit1 + Digit2 + carry;
-                    carry = sum / 10;
-                    sum = sum % 10;
-                    Ans = to_string(sum) + Ans;
-                    digit_Idx1--;
-                    digit_Idx2--;
+                if(Ans.empty()){
+                    Ans = "0.0";
                 }
                 if (carry > 0) {
                     Ans = to_string(carry) + Ans;
                 }
-
-                Ans = '-'+Ans;
                 return Ans;
-            }else if(stNum._Sign!=SecNum._Sign){
-                if(stNum < SecNum){
-                    swap(stNum,SecNum);
-                }
-                if(stNum._Sign){
-                    stNum._Sign = !stNum._Sign;
-                }if(SecNum._Sign){
-                    SecNum._Sign = !SecNum._Sign;
-                }
-
-                Ans = Sub(stNum,SecNum);
-                return Ans;
-
-
             }
         }
         else {
