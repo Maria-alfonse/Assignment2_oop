@@ -98,7 +98,71 @@ private:
                 if (carry > 0) {
                     Ans = to_string(carry) + Ans;
                 }
+
+
                 return Ans;
+            }
+
+            else if(stNum._Sign && SecNum._Sign){
+
+                int digit_Idx1 = frac1.size() - 1;
+                int digit_Idx2 = frac2.size() - 1;
+                while(digit_Idx1 != digit_Idx2){
+                    if(digit_Idx1 < digit_Idx2){
+                        frac1 = frac1 + '0';
+                        digit_Idx1++;
+                    }else{
+                        frac2 = frac2 + '0';
+                        digit_Idx2++;
+                    }
+                }
+
+                while (digit_Idx1 > -1 || digit_Idx2 > -1) {
+
+                    int Digit1 = (digit_Idx1 >= 0) ? frac1[digit_Idx1] - '0' : 0;
+                    int Digit2 = (digit_Idx2 >= 0) ? frac2[digit_Idx2] - '0' : 0;
+                    int sum = Digit1 + Digit2 + carry;
+                    carry = sum / 10;
+                    sum = sum % 10;
+                    Ans = to_string(sum) + Ans;
+                    digit_Idx1--;
+                    digit_Idx2--;
+
+                }
+                //std::reverse(Ans.begin(), Ans.end());
+                Ans = '.' + Ans;
+                digit_Idx1 = Deci1.size() - 1;
+                digit_Idx2 = Deci2.size() - 1;
+                while (digit_Idx1 > -1 || digit_Idx2 > -1) {
+                    int Digit1 = (digit_Idx1 >= 0) ? Deci1[digit_Idx1] - '0' : 0;
+                    int Digit2 = (digit_Idx2 >= 0) ? Deci2[digit_Idx2] - '0' : 0;
+                    int sum = Digit1 + Digit2 + carry;
+                    carry = sum / 10;
+                    sum = sum % 10;
+                    Ans = to_string(sum) + Ans;
+                    digit_Idx1--;
+                    digit_Idx2--;
+                }
+                if (carry > 0) {
+                    Ans = to_string(carry) + Ans;
+                }
+
+                Ans = '-'+Ans;
+                return Ans;
+            }else if(stNum._Sign!=SecNum._Sign){
+                if(stNum < SecNum){
+                    swap(stNum,SecNum);
+                }
+                if(stNum._Sign){
+                    stNum._Sign = !stNum._Sign;
+                }if(SecNum._Sign){
+                    SecNum._Sign = !SecNum._Sign;
+                }
+
+                Ans = Sub(stNum,SecNum);
+                return Ans;
+
+
             }
         }
         else {
@@ -106,6 +170,7 @@ private:
             return "";
         }
     }
+
     string Sub(BigReal& num1, BigReal& num2) {
         string Ans = "";
 
@@ -317,7 +382,7 @@ public:
         }
 
     }
-    
+
 //copy constructor
 
 //Assignment operator
@@ -329,14 +394,14 @@ public:
     int sign(){
         return _Sign;
     }
-    
+
 
     BigReal operator+(BigReal& other) {
         BigReal Answer(Sum(*this, other));
         return Answer;
     }
 
-      BigReal operator-(BigReal& other){
+    BigReal operator-(BigReal& other){
         BigReal Answer(Sub(*this, other));
         return Answer;
 
@@ -366,7 +431,7 @@ public:
 
 int main() {
     BigReal n1 ("11.9000000000000000000000000000000001");
-    BigReal n2 ("+=2333333333339.1134322222222292");
+    BigReal n2 ("2333333333339.1134322222222292");
     BigReal n3 = n1 + n2;
     cout << n3<<'\n';
     BigReal();
