@@ -102,6 +102,101 @@ private:
             return "";
         }
     }
+    string Sub(BigReal& num1, BigReal& num2) {
+        string Ans = "";
+
+        if (num1.isValid() && num2.isValid()) {
+            bool resultSign = num1._Sign;
+            if (Equality(num1,num2)){
+                Ans="0";
+                return Ans;
+            }
+            if (less_than(num1, num2)) {
+                swap(num1, num2);
+                resultSign= !num1._Sign; // Change sign of the result
+            }
+            if (num1._Sign == num2._Sign) {
+                vector<string> Num1 = Split_String(num1._Real);
+                string Int1 = Num1[0];
+                string Dec1 = Num1[1];
+                vector<string> Num2 = Split_String(num2._Real);
+                string Int2 = Num2[0];
+                string Dec2 = Num2[1];
+
+                // Subtract decimal parts
+                int lenDec1 = Dec1.length(), lenDec2 = Dec2.length();
+                int maxLenDec = max(lenDec1, lenDec2);
+
+                if (lenDec1 < lenDec2)
+                    Dec1.append(lenDec2 - lenDec1, '0');
+                else if (lenDec1 > lenDec2)
+                    Dec2.append(lenDec1 - lenDec2, '0');
+
+                int borrow = 0;
+                for (int i = maxLenDec - 1; i >= 0; i--) {
+                    int sub = ((Dec1[i] - '0') - (Dec2[i] - '0') - borrow);
+                    if (sub < 0) {
+                        sub += 10;
+                        borrow = 1;
+                    } else
+                        borrow = 0;
+                    Ans = to_string(sub) + Ans;
+                }
+
+                Ans = '.' + Ans;
+
+                // Subtract integer parts
+                int lenInt1 = Int1.length(), lenInt2 = Int2.length();
+                int maxLenInt = max(lenInt1, lenInt2);
+
+                if (lenInt1 < lenInt2)
+                    Int1 = string(lenInt2 - lenInt1, '0') + Int1;
+                else if (lenInt1 > lenInt2)
+                    Int2 = string(lenInt1 - lenInt2, '0') + Int2;
+
+                for (int i = maxLenInt - 1; i >= 0; i--) {
+                    int sub = ((Int1[i] - '0') - (Int2[i] - '0') - borrow);
+                    if (sub < 0) {
+                        sub += 10;
+                        borrow = 1;
+                    } else
+                        borrow = 0;
+                    Ans = to_string(sub) + Ans;
+                }
+
+                if (!Dec1.empty() || !Dec2.empty()) {
+                    Ans = Ans.substr(0, Ans.find_last_not_of('0') + 1);  // Remove trailing zeros 52.15000000
+                    if (Ans[Ans.size() - 1] == '.') {  // Remove decimal point if no decimal places 43.0000
+                        Ans.pop_back();//43
+                    }
+                }
+                if (!Int1.empty() || !Int2.empty()) {
+                    Ans = Ans.substr(Ans.find_first_not_of('0') , Ans.size());  // Remove trailing zeros 00052.15
+                }
+                if(Ans.empty()){
+                    Ans = "0.0";
+                }
+                Ans = (resultSign ? "-" : "") + Ans;
+                return Ans;
+            }
+            else if (num1._Sign!=num2._Sign){
+                if(num1._Sign){
+                    num1._Sign = !num1._Sign;
+                }if(num2._Sign){
+                    num2._Sign = !num2._Sign;
+                }
+                Ans = Sum(num1,num2);
+                Ans = (resultSign ? "-" : "") + Ans;
+                return Ans;
+            }
+
+        }
+        else {
+            cout << "Numbers are invalid";
+            return "";
+        }
+    }
+
 
     void GetValue(){
         if(_Sign){
@@ -237,7 +332,12 @@ public:
         return Answer;
     }
 
-    //operator-
+      BigReal operator-(BigReal& other){
+        BigReal Answer(Sub(*this, other));
+        return Answer;
+
+    }
+
 
     bool operator<(BigReal& other){
         bool Answer(less_than(*this, other));
