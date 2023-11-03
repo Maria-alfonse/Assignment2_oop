@@ -15,9 +15,13 @@ private:
             if (_Real[i] == '.' && count == 0) {
                 count++;
             }
+
             else if (!isdigit(_Real[i])){
                 return false;
             }
+        }
+        if(count == 0){
+            _Real +=".0";
         }
         return true;
     }
