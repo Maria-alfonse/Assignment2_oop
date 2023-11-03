@@ -103,6 +103,14 @@ private:
         }
     }
 
+    void GetValue(){
+        if(_Sign){
+            cout<<"+"<<_Real<<endl;
+        }else{
+            cout<<"-"<<_Real<<endl;
+        }
+    }
+
     bool less_than(BigReal& n, BigReal& m){
         if(n.isValid() && m.isValid()){
             vector<string>n1 = n.Split_String(n._Real);
@@ -158,39 +166,78 @@ private:
         }
     }
 
-public:
-    BigReal(string Real) {
-        _Real = Real;
-        _Size = _Real.size();
-        if (_Real[0] == '+') {
-            _Sign = 0;
-            _Real.erase(_Real.begin());
-            _Size--;
-
-        }
-        else if (_Real[0] >= '0' && _Real[0] <= '9') {
-            _Sign = 0;
-        }
-        else if (_Real[0] == '-') {
-            _Sign = 1;
-            _Real.erase(_Real.begin());
-            _Size--;
-        }
-
-        if(_Real[0] == '.'){
-            _Real = '0' + _Real;
-        }
+    bool Equality(BigReal&n, BigReal&m){
+        if(n._Real == m._Real && n._Size == m._Size && n._Sign == m._Sign){
+            return true;
+        }return false;
     }
+
+public:
+    BigReal(){
+        _Real = "0.0";
+        _Size = 3;
+        _Sign = 0;
+    }
+
+    BigReal(string Real) {
+        bool check = true;
+        int count = 0;
+        for (int i = 0; i < Real.size(); ++i) {
+            if (Real[i] == '.' && count == 0) {
+                count++;
+            }
+            else if (!isdigit(Real[i])){
+                check = false;
+            }
+        }
+        if(check){
+            _Real = Real;
+            _Size = _Real.size();
+            if (_Real[0] == '+') {
+                _Sign = 0;
+                _Real.erase(_Real.begin());
+                _Size--;
+
+            }
+            else if (_Real[0] >= '0' && _Real[0] <= '9') {
+                _Sign = 0;
+            }
+            else if (_Real[0] == '-') {
+                _Sign = 1;
+                _Real.erase(_Real.begin());
+                _Size--;
+            }
+            if(_Real[0] == '.'){
+                _Real = '0' + _Real;
+            }
+        }else{
+            cout<<"Invalid Number!\tSetting value to 0.0\n";
+            _Real = "0.0";
+            _Size = 3;
+            _Sign = 0;
+        }
+
+    }
+    
+//copy constructor
+
+//Assignment operator
+
+    int size(){
+        return _Size;
+    }
+
+    int sign(){
+        return _Sign;
+    }
+    
 
     BigReal operator+(BigReal& other) {
         BigReal Answer(Sum(*this, other));
         return Answer;
     }
 
-    friend ostream& operator<<(ostream& os, BigReal& BIG) {
-        os << (BIG._Sign ? "-" : "") << BIG._Real;
-        return os;
-    }
+    //operator-
 
     bool operator<(BigReal& other){
         bool Answer(less_than(*this, other));
@@ -201,14 +248,24 @@ public:
         bool Answer(greater_than(*this, other));
         return Answer;
     }
+
+    bool operator==(BigReal& other){
+        bool Answer(Equality(*this, other));
+        return Answer;
+    }
+
+    friend ostream& operator<<(ostream& os, BigReal& BIG) {
+        os << (BIG._Sign ? "-" : "") << BIG._Real;
+        return os;
+    }
 };
 
 int main() {
     BigReal n1 ("11.9000000000000000000000000000000001");
-    BigReal n2 ("2333333333339.1134322222222292");
+    BigReal n2 ("+=2333333333339.1134322222222292");
     BigReal n3 = n1 + n2;
     cout << n3<<'\n';
-    
+    BigReal();
     string n,m;
     cin>>n>>m;
     BigReal n4 (n), n5 (m);
