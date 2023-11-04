@@ -1,15 +1,12 @@
-//
-// Created by LENOVO on 11/4/2023.
-//
-
 #include "BigReal.h"
 using namespace std;
-
+//Default constructor
 BigReal :: BigReal(){
     _Real = "0.0";
     _Size = 3;
     _Sign = 0;
 }
+
 BigReal ::BigReal(string Real) {
     _Real = Real;
     _Size = _Real.size();
@@ -28,40 +25,43 @@ BigReal ::BigReal(string Real) {
     _Sign = 1;
     _Real.erase(_Real.begin());
     _Size--;
-}
+    }
 
-//to correct the . position
-if(_Real[0] == '.'){
-_Real = '0' + _Real;
-_Size++;
-}
+    //to correct the . position
+    if(_Real[0] == '.'){
+    _Real = '0' + _Real;
+    _Size++;
+    }
 
-//to check if the number is valid
-bool check = 0;
-int count_dot = 0;
-for (int i = 0; i < _Size; ++i) {
-if (_Real[i] == '.' && count_dot == 0) {
-count_dot++;
-}
-else if (!isdigit(_Real[i])){
-cout<<"\nInvalid Number! Set Number to default 0.0\n";
-check = 1;
-break;
-}
-}
-if(count_dot == 0){
-_Size+=2;
-_Real +=".0";
-}
-if(check){
-_Real = "0.0";
-_Size = 3;
-_Sign = 0;
-}
-while(!_Real.empty() && _Real[0]=='0' && _Real.size()>1){
-_Real.erase(_Real.begin());
-_Size--;
-}
+    //to check if the number is valid
+    bool check = 0;
+    int count_dot = 0;
+    for (int i = 0; i < _Size; ++i) {
+        //if the char is . and is the first . count_dot increase by 1
+        if (_Real[i] == '.' && count_dot == 0) {
+            count_dot++;
+        }
+        //if the char is not a number or if it is a . but not the first one then the number is invalid
+        else if (!isdigit(_Real[i])){
+            cout<<"\nInvalid Number! Set Number to default 0.0\n";
+            check = 1;
+            break;
+            }
+    }
+    if(count_dot == 0){
+        _Size+=2;
+        _Real +=".0";
+    }
+    if(check){
+        _Real = "0.0";
+        _Size = 3;
+        _Sign = 0;
+    }
+    //delete loading zeros 0090 -> 90
+    while(!_Real.empty() && _Real[0]=='0' && _Real.size()>1){
+        _Real.erase(_Real.begin());
+        _Size--;
+    }
 }
 int BigReal :: size(){
     return _Size;
@@ -100,11 +100,18 @@ ostream& operator<<(ostream& os, BigReal& BIG) {
     return os;
 }
 bool BigReal :: operator<(BigReal& other){
+    //Answer store the result of the less_than function which tests the < case
     bool Answer(less_than(*this, other));
     return Answer;
 }
 bool BigReal :: operator>(BigReal& other){
+    //Answer store the result of the greater_than function which tests the > case
     bool Answer(greater_than(*this, other));
+    return Answer;
+}
+bool BigReal :: operator==(BigReal& other){
+    //Answer store the result of the Equality function which tests the = case
+    bool Answer(Equality(*this, other));
     return Answer;
 }
 bool BigReal :: operator==(BigReal& other){
