@@ -347,10 +347,7 @@ private:
             return Ans;
         }
     }
-
-
-
-
+    
 public:
     BigReal(){
         _Real = "0.0";
