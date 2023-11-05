@@ -1,3 +1,12 @@
+// File: A2_S5_2022025_No10.cpp
+// Purpose: Message Altering to Avoid Censorship.
+// Author: Ahmed Abdelaziz Ahmed.
+// Section: S5
+// ID: 20220025
+// TA: Maya Ahmed Kamal
+// Date: 26 Oct 2023
+
+
 #include <iostream>
 #include <fstream>
 #include <map>
