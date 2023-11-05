@@ -1,0 +1,3 @@
+C:/Users/Ahmed/CLionProjects/A2_S5_20220131_11/cmake-build-debug/CMakeFiles/A2_S5_20220131_11.dir
+C:/Users/Ahmed/CLionProjects/A2_S5_20220131_11/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Ahmed/CLionProjects/A2_S5_20220131_11/cmake-build-debug/CMakeFiles/rebuild_cache.dir
