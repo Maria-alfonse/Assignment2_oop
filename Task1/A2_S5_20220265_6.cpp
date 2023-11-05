@@ -40,7 +40,7 @@ int main() {
     binaryPrint(0);
     binaryPrint(4);
     binaryPrint(27);
-    cout<<endl;
-    Numbers("00101", 7);
+    cout<<endl<<endl;
+    Numbers("00101", 2);
     return 0;
 }
