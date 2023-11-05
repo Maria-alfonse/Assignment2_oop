@@ -124,7 +124,16 @@ private:
             return !less_than(n, m);
         }
     }
-    bool Equality(BigReal&n, BigReal&m){
+   bool Equality(BigReal&n, BigReal&m){
+        //to erase loading zeros in the fraction
+        while(n._Real[n._Real.size()-1] == '0'){
+            n._Real.erase(n._Real.size()-1);
+            n._Size--;
+        }
+        while(m._Real[m._Real.size()-1] == '0'){
+            m._Real.erase(m._Real.size()-1);
+            m._Size--;
+        }
         if(n._Real == m._Real && n._Size == m._Size && n._Sign == m._Sign){
             return true;
         }return false;
