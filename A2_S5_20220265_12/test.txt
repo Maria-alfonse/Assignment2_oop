@@ -1,0 +1,15 @@
+Subject: Urgent: Your Account Security Notice
+
+Dear [Your Name],
+
+We have noticed some unusual activity on your bank account. For your security, we require your immediate action.
+
+Please click the following link to verify your account information:
+https://fakebank.com/verify
+
+Alternatively, you can call our customer support at 1-800-123-4567.
+
+Failure to verify your account may result in a temporary suspension.
+
+Sincerely,
+Bank of Phishville
