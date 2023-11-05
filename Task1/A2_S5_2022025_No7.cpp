@@ -1,5 +1,5 @@
 // File: A2_S5_2022025_No7.cpp
-// Purpose: Get prime numbers using Sieve Of Eratosthenes algorthim.
+// Purpose: Domino Game
 // Author: Ahmed Abdelaziz Ahmed.
 // Section: S5
 // ID: 20220025
