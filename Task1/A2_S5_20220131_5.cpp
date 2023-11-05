@@ -1,11 +1,3 @@
-// File:A2_S5_20220131_5.cpp
-// Purpose: top 10 list of scores
-// Author: Rana Esmail Zekery
-// Section: S5
-// ID: 20220131
-// TA: eng/Nardeen Mokhless Khela and eng/Maya Ahmed Kamal
-// Date: October 28, 2023
-
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -53,7 +45,7 @@ void find_player(string name, vector<pair<string, int>> &top_10,vector<pair<stri
         cout <<name <<"has not been input";
 
     }
-    else {
+    else if ( max_score>0&& inputed){
         cout << name << "'s highest score is :" << max_score << endl;
     }
 
@@ -62,10 +54,10 @@ void find_player(string name, vector<pair<string, int>> &top_10,vector<pair<stri
 // Function to display the menu and handle user input.
 void menu(vector<pair<string, int>> &top_10, vector<pair<string, int>> &scores) {
     int op;
-     cout <<"""1 - Add player\n"
-         "2 - Print the top 10\n"
-         "3 - Find player\n"
-          "4 - Exit\n""";
+    cout <<"""1 - Add player\n"
+           "2 - Print the top 10\n"
+           "3 - Find player\n"
+           "4 - Exit\n""";
     cin >> op;
     if (op == 1) {
         string name;
@@ -85,6 +77,7 @@ void menu(vector<pair<string, int>> &top_10, vector<pair<string, int>> &scores) 
         }
     }
     else if (op == 3) {
+        ftop_10(top_10, scores);
         cout <<"enter the name of the player :";
         string name;
         cin >> name;
