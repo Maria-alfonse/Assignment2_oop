@@ -1,5 +1,5 @@
 // File: A2_S5_2022025_No7.cpp
-// Purpose: Domino Game
+// Purpose: Get prime numbers using Sieve Of Eratosthenes algorthim.
 // Author: Ahmed Abdelaziz Ahmed.
 // Section: S5
 // ID: 20220025
@@ -86,9 +86,19 @@ void PrintDominoChain(deque<dominoT>& chain) {
 }
 int main() {
 
-    deque<dominoT> dominoSet = {{1, 4}, {2, 6}, {4, 4}, {6,1},{4,3}};
+    deque<dominoT> dominoSet;
     deque<dominoT> chain;
-
+    int n;
+cout << "# of dominos :";
+cin >>n;
+    for (int i = 0; i < n; ++i) {
+        dominoT X;
+        cout<<"enter Left :";
+        cin >>X.leftDots;
+        cout<<"enter Right :";
+        cin >>X.rightDots;
+        dominoSet.push_back(X);
+    }
     if (FormsDominoChain(dominoSet, chain)) {
         cout << "Domino Solution: ";
         PrintDominoChain(chain);
