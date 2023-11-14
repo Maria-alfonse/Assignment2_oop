@@ -144,6 +144,7 @@ void machine :: RunFull() {
                 PC -= 2;
             }
         } else if (memory[hxPC][0] == 'C' || memory[hxPC][0] == 'c') {
+            PC+=2;
             Display();
             PC = -1;
             return;  // Set PC to -1 to indicate termination
@@ -182,6 +183,7 @@ void machine :: RunSBS() {
             PC -= 2;
         }
     } else if (memory[hxPC][0] == 'C' || memory[hxPC][0] == 'c') {
+        PC+=2;
         Display();
         PC = -1;
         return;  // Set PC to -1 to indicate termination
@@ -196,7 +198,7 @@ void machine :: Display() {
     string hxPC = counter(PC);
     cout << "Machine State:" << endl;
     cout << "hxPC: " << hxPC << endl;
-    cout << "IR: " << memory[hxPC] << memory[counter(PC + 1)] << endl;
+    cout << "IR: " << memory[counter(PC-2)] << memory[counter(PC-1 )] << endl;
     cout << "Registers: \n";
     DisplayRegisters();
 }
