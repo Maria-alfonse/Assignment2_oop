@@ -7,14 +7,14 @@ using namespace std;
 // Function to convert an integer to a two-character hexadecimal string
 string counter(int i) {
     // Calculate the tens and ones places in the hexadecimal representation
-    int tens = i / 16;
-    int ones = i % 16;
+    int tens = i / 16; //27/16=1
+    int ones = i % 16;//27%16=11             ===  10+1
 
     // Convert the tens place to the corresponding character
-    char tensDigit = (tens < 10) ? '0' + tens : 'A' + (tens - 10);
+    char tensDigit = (tens < 10) ? '0' + tens : 'A' + (tens - 10);  //0+1=1
 
     // Convert the ones place to the corresponding character
-    char onesDigit = (ones < 10) ? '0' + ones : 'A' + (ones - 10);
+    char onesDigit = (ones < 10) ? '0' + ones : 'A' + (ones - 10);  //"A"+1 =B
 
     // Initialize an empty string to store the result
     string Ans = "";
@@ -76,29 +76,38 @@ private:
     // Load the value from memory into a register
     void LoadRegisterFromMemory(int registerIndex, string memoryAddress) {
         Registers.setRegister(registerIndex, memory[memoryAddress]);
+       cout <<"LOAD Register "<<registerIndex <<" with the content of memory at address "<< memoryAddress<<".\n";
     }
 
     // Load a specific pattern into a register
     void LoadRegisterWithPattern(int registerIndex, string pattern) {
         Registers.setRegister(registerIndex, pattern);
+        cout <<"LOAD Register " <<registerIndex<<" with bit pattern " <<pattern<<".\n";
+
     }
 
     // Store the value from a register into memory
     void StoreRegisterToMemory(int registerIndex, string memoryAddress) {
-        if (memoryAddress == "00") {
+        cout <<"STORE the bit pattern of Register " <<registerIndex<<" in memory at address "<< memoryAddress<<".\n";
+        if (memoryAddress == "00") { // to print on the screen
+
             cout << "Value of register " << registerIndex << " : " << Registers.DisplayRegister(registerIndex) << "\n\n";
-        } else {
+        }
+        else {
+
             memory[memoryAddress] = Registers.DisplayRegister(registerIndex);
         }
     }
 
     // Move the value from one register to another
     void MoveRegisterToRegister(int sourceIndex, int destinationIndex) {
+        cout <<"MOVE the bit pattern of Register "<< sourceIndex <<"into Register "<<destinationIndex<<".\n";
         Registers.setRegister(destinationIndex, Registers.DisplayRegister(sourceIndex));
     }
 
     // Add two registers using two's complement representation
     void AddRegistersTwoComplement(int resultIndex, char operandIndex1, char operandIndex2) {
+        cout <<"ADD the bit patterns of Registers " << operandIndex1<<" and "<<operandIndex2 <<" as though they were two's complement and store the result in Register "<<resultIndex<<".\n";
         // Get the two operands from registers
         string C1 = "";
         C1 += operandIndex1;
@@ -125,6 +134,7 @@ private:
 
     // Jump to a specific memory address if the contents of a register are equal to zero
     void JumpIfEqual(int registerIndex, string memoryAddress) {
+        cout <<"JUMP to the instruction located in memory at address "<< memoryAddress <<" if the bit pattern in Register "<<registerIndex<<" matches with the bit pattern in Register 0.\n";
         if (Registers.DisplayRegister(registerIndex) == Registers.DisplayRegister(0)) {
             PC = hexToDec(memoryAddress);
         }
